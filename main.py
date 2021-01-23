@@ -7,9 +7,11 @@ class Pencere(QtWidgets.QWidget):
         self.init_ui()
     def init_ui(self):
         self.sicaklik = 3.6
-        self.gaz = 50
-        self.hacim = 100
+        self.gaz = 40
+        self.hacim = 144
         self.verimlilik = 100
+        self.bilgiler = QtWidgets.QLabel("Erdal Emlik 1711012024   "
+                                      "Melih Fırat Avcı 1711012034")
         self.temp = QtWidgets.QLabel("Sıcaklık")
         self.gas = QtWidgets.QLabel("Gaz")
         self.verim = QtWidgets.QLabel("Verimlilik")
@@ -34,6 +36,7 @@ class Pencere(QtWidgets.QWidget):
         v_box.addWidget(self.arttir)
         v_box.addWidget(self.azalt)
         v_box.addWidget(self.dengele)
+        v_box.addWidget(self.bilgiler)
         v_box.addStretch()
         self.setLayout(v_box)
         self.arttir.clicked.connect(self.art)
@@ -46,7 +49,7 @@ class Pencere(QtWidgets.QWidget):
         if self.sicaklik>3.6:
             self.hacim+=1
             self.verimlilik-=1
-            self.gaz-=1
+
             self.temp1.setText(str(self.sicaklik))
             self.gas1.setText(str(self.gaz))
             self.verim1.setText(str(self.verimlilik))
@@ -54,14 +57,13 @@ class Pencere(QtWidgets.QWidget):
         elif self.sicaklik<3.6:
             self.hacim -=1
             self.verimlilik -=1
-            self.gaz-=1
+
             self.temp1.setText(str(self.sicaklik))
             self.gas1.setText(str(self.gaz))
             self.verim1.setText(str(self.verimlilik))
             self.hcm1.setText(str(self.hacim))
         else:
             self.sicaklik = 3.6
-            self.gaz = 50
             self.hacim = 100
             self.verimlilik = 100
             self.temp1.setText(str(self.sicaklik))
@@ -75,7 +77,6 @@ class Pencere(QtWidgets.QWidget):
         if self.sicaklik>3.6:
             self.hacim +=1
             self.verimlilik -=1
-            self.gaz -=1
             self.temp1.setText(str(self.sicaklik))
             self.gas1.setText(str(self.gaz))
             self.verim1.setText(str(self.verimlilik))
@@ -83,14 +84,12 @@ class Pencere(QtWidgets.QWidget):
         elif self.sicaklik<3.6:
             self.hacim -=1
             self.verimlilik -=1
-            self.gaz -=1
             self.temp1.setText(str(self.sicaklik))
             self.gas1.setText(str(self.gaz))
             self.verim1.setText(str(self.verimlilik))
             self.hcm1.setText(str(self.hacim))
         else:
             self.sicaklik = 3.6
-            self.gaz = 50
             self.hacim = 100
             self.verimlilik = 100
             self.temp1.setText(str(self.sicaklik))
@@ -98,14 +97,23 @@ class Pencere(QtWidgets.QWidget):
             self.verim1.setText(str(self.verimlilik))
             self.hcm1.setText(str(self.hacim))
     def denge(self):
-        self.sicaklik = 3.6
-        self.gaz = 50
-        self.hacim = 100
-        self.verimlilik = 100
-        self.temp1.setText(str(self.sicaklik))
-        self.gas1.setText(str(self.gaz))
-        self.verim1.setText(str(self.verimlilik))
-        self.hcm1.setText(str(self.hacim))
+        if self.sicaklik<3.6:
+            self.temp1.setText(str(self.sicaklik))
+            self.gaz = abs(self.hacim)/abs(self.sicaklik)
+            self.hacim = 144
+            self.verimlilik =100
+            self.gas1.setText(str(self.gaz))
+            self.verim1.setText(str(self.verimlilik))
+            self.hcm1.setText(str(self.hacim))
+        elif self.sicaklik>3.6:
+            self.temp1.setText(str(self.sicaklik))
+            self.gaz = self.hacim/abs(self.sicaklik)
+            self.hacim = 144
+            self.verimlilik = 100
+            self.gas1.setText(str(self.gaz))
+            self.verim1.setText(str(self.verimlilik))
+            self.hcm1.setText(str(self.hacim))
+
 app = QtWidgets.QApplication(sys.argv)
 pencere = Pencere()
 sys.exit(app.exec_())
